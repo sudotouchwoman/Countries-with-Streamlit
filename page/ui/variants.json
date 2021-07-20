@@ -1,0 +1,27 @@
+{
+    "LAYOUT":{
+        "idea"  :   "Тема",
+        "theme" :   "Тематика",
+        "kw_all":   "Ключевые слова",
+        "kw_pos":   "Позитив",
+        "kw_neg":   "Негатив",
+        "social_networks": "Соц.сети",
+        "media" :   "СМИ"
+    },
+    "ORDER":[
+        "idea","theme","kw_all","kw_pos","kw_neg","social_networks","media"
+    ],
+    "COUNTRIES":[
+        "Россия",
+        "Украина",
+        "США"
+    ],
+    "DATE":{
+        "min":"2021/1/1",
+        "max":"2021/12/31"
+    },
+    "OPTIONS":[
+        "Вариант 1",
+        "Вариант 2"
+    ]
+}

@@ -1,0 +1,5 @@
+# local files, cache files, htmls (they would contain lots of data for pyvis graphs)
+.vscode/
+*.html
+__pycache__/
+*.pyc

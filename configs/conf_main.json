@@ -1,27 +1,19 @@
 {
     "CONFIGS":{
-        "main"      :"configs/conf_main.json",
-        "estimation":"configs/conf_main.json",
-        "variants"  :"configs/conf_main.json",
-        "model"     :"configs/conf_main.json"
+        "main"      :"../configs/conf_main.json",
+        "estimation":"../configs/conf_estimation.json",
+        "variants"  :"../configs/conf_variants.json",
+        "model"     :"../configs/conf_model.json"
     },
-    "REMOTE":{
-        "HEAD"      :"http://",
-        "HOST"		:"server",
-		"PORT"		:":5000",
-		"ROUTE"		:"/api/vis/",
-		"TIMEOUT"	:[0.01,0.01]
-    },
-    "LOCAL":{
-        "UI":{
-            "estimation":"page/ui/estimation.json",
-            "variants"  :"page/ui/variants.json",
-            "model"     :"page/ui/model.json"
-        },
-        "CONTENT":{
-            "estimation":"page/content/estimation.json",
-            "variants"  :"page/content/variants.json",
-            "model"     :"page/content/model.json"
+    "TEXT":{
+        "sidebar":{
+            "title": "Меню",
+			"description": "Выберите опцию для просмотра",
+			"pagenames":[
+				"Оценка ИО",
+				"Варианты",
+				"Модель"
+			]
         }
     },
     "ENCODING":"utf-8"

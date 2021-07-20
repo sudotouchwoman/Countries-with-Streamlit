@@ -1,0 +1,68 @@
+{
+    "UI":{
+        "REMOTE":{
+            "HEAD"      :"http://",
+            "HOST"		:"localhost",
+            "PORT"		:":5000",
+            "ROUTE"		:"/api/ui/estimation",
+            "TIMEOUT"	:[0.01,0.01]
+        },
+        "LOCAL":{
+                "PATH":"../page/ui/estimation.json"
+        }
+    },
+    "CONTENT":
+    {
+        "REMOTE":{
+            "HEAD"      :"http://",
+            "HOST"		:"localhost",
+            "PORT"		:":5000",
+            "ROUTE"		:"/api/content/estimation",
+            "TIMEOUT"	:[0.01,0.01]
+        },
+        "LOCAL":{
+            "PATH":"../page/content/estimation.json"
+        }
+    },
+    "ENCODING":"utf-8",
+    "TEXT":{
+        "title": "Оценка ИО",
+        "description": [
+            "Выберите страну из выпадающего списка для просмотра (показаны фактические значения ИО и прогноз)."
+        ],
+        "expander":"Посмотреть описание",
+        "select_country":"Выберите страну",
+        "cache":{
+            "button_title"  :"Очистить кеш",
+			"success"       : "Кеш успешно очищен",
+			"failure"       : "Нечего очищать"
+        },
+        "links":{
+            "expander"  :"Скачать используемые файлы",
+			"main"      :"Общий файл конфигурации",
+			"this"      :"Файл конфигурации текущей страницы ",
+			"data"      :"Данные текущей страницы "
+        }
+    },
+    "PLOT": {
+        "xaxisname" : "Время",
+        "yaxisname" : "Устойчивость",
+        "elements"  : "Страны",
+        "timeformat": "%Y-%m-%d",
+        "linestyling":{
+            "colors":[
+                "#168039",
+                "#ff5252"
+            ],
+            "linestyles":[
+                "-",
+                "--"
+            ]
+        },
+        "legend": [
+            "Факт",
+            "Прогноз"
+        ],
+        "loc": "lower right"
+    }
+}
