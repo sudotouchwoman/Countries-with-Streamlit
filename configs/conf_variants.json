@@ -55,5 +55,11 @@
             "percents":["social_networks", "media"],
             "commas":[ "kw_all", "kw_pos", "kw_neg"]
         }
+    },
+    "LINKS":{
+        "expander"  :"Скачать используемые файлы",
+		"PAGE_CONFIG"   :{"text":"Конфигурационный файл страницы", "filename":"variants-config.json"},
+		"UI_INFO"       :{"text":"Файл полученных от сервера данных разметки", "filename":"variants-ui.json"},
+		"PAGE_DATA"     :{"text":"Данные последнего запроса", "filename":"variants-data.json"}
     }
 }

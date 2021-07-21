@@ -6,6 +6,7 @@ expose() loads content with user-selected context and displays the fetched resul
 now i am willing to add some data validation with schema
 '''
 import os
+import json
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,6 +14,7 @@ import pandas as pd
 import datetime
 import streamlit as st
 import streamlit.components.v1 as components
+import base64
 
 from DataSource import *
 from DisplayGraph import *
@@ -27,6 +29,7 @@ class PageExposer:
         self.BASEDIR = os.getcwd()
         self.ENCODING = settings.get('ENCODING', 'utf-8')
         self.FORMAT = settings.get('FORMAT', 'json')
+        self.PAGE_CONFIG = settings
         for ATTRNAME, ATTRVALUE in settings.items():
             self.__setattr__(ATTRNAME, ATTRVALUE)
 
@@ -70,10 +73,26 @@ class PageExposer:
         return True
 
 
+    def show_links(self):
+        with st.beta_expander(self.LINKS['expander']):
+                attrs = ['PAGE_CONFIG', 'UI_INFO','PAGE_DATA']
+                for attr in attrs:
+                    if hasattr(self,attr):
+                        if getattr(self, attr) != None:
+                            link = download_link(
+                                getattr(self, attr),
+                                self.LINKS[attr]['filename'],
+                                self.LINKS[attr]['text'],
+                                self.ENCODING)
+                            st.markdown(link, unsafe_allow_html=True)        
+        pass
+
+
 class EstimationPage(PageExposer):
     def __init__(self, settings:dict) -> None:
         super().__init__(settings)
         self.set_options()
+        self.show_links()
 
 
     def expose(self) -> bool:
@@ -87,6 +106,7 @@ class EstimationPage(PageExposer):
         if FETCHED is None:
             st.warning('Failed to load contents!')
             return False
+        self.PAGE_DATA = FETCHED
         self.show_selected(FETCHED)
         return True
 
@@ -139,6 +159,7 @@ class VariantsPage(PageExposer):
     def __init__(self, settings: dict) -> None:
         super().__init__(settings)
         self.set_options()
+        self.show_links()
 
 
     def expose(self) -> bool:
@@ -169,6 +190,7 @@ class VariantsPage(PageExposer):
             if FETCHED is None:
                 st.warning('Failed to load contents!')
                 return False
+            self.PAGE_DATA = FETCHED
             self.show_selected(FETCHED)
             return True
 
@@ -219,6 +241,7 @@ class ModelPage(PageExposer):
     def __init__(self, settings: dict) -> None:
         super().__init__(settings)
         self.set_options()
+        self.show_links()
 
 
     def expose(self) -> bool:
@@ -240,6 +263,7 @@ class ModelPage(PageExposer):
             if FETCHED is None:
                 st.warning('Failed to load contents!')
                 return False
+            self.PAGE_DATA = FETCHED
             HTML_LOC = os.path.join(self.BASEDIR, self.HTMLDIR,'_'.join(list(CONTEXT.values()))+'.html')
             self.show_selected(FETCHED, HTML_LOC)
             return True
@@ -263,3 +287,13 @@ class ModelPage(PageExposer):
         for i in range(len(TABLES)):
             with columns[i%2]:
                 st.dataframe(TABLES[i])
+
+
+@st.cache(persist = True, show_spinner= False, suppress_st_warning=True)
+def download_link(obj_to_download, download_filename, link_text, ENCODING):
+    if isinstance(obj_to_download, pd.DataFrame):
+        obj_to_download = obj_to_download.to_csv(index=False, encoding=ENCODING)
+    if isinstance(obj_to_download, dict):
+        obj_to_download = json.dumps(obj_to_download, ensure_ascii=False)
+    link = base64.b64encode(obj_to_download.encode(ENCODING)).decode(ENCODING)
+    return f'<a href="data:file/txt;base64,{link}" download="{download_filename}">{link_text}</a>'

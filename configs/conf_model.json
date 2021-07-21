@@ -24,7 +24,7 @@
         }
     },
     "ENCODING":"utf-8",
-    "HTMLDIR":"/page/html/",
+    "HTMLDIR":"page/html/",
     "PYVIS":{
         "height"    :"600px",
         "width"     :"100%",
@@ -46,6 +46,12 @@
             "X":200,
             "Y":10
         }
+    },
+    "LINKS":{
+        "expander"  :"Скачать используемые файлы",
+		"PAGE_CONFIG"   :{"text":"Конфигурационный файл страницы", "filename":"model-config.json"},
+		"UI_INFO"       :{"text":"Файл полученных от сервера данных разметки", "filename":"model-ui.json"},
+		"PAGE_DATA"     :{"text":"Данные последнего запроса", "filename":"model-data.json"}
     },
     "TEXT":{
         "title": "Модель ИВ",

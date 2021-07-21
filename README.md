@@ -1,18 +1,34 @@
 ## **Dockerized streamlit+flask project about informational context within various countries**
+**To run this app:** 
+ **Clone this repo** with `git clone https://github.com/sudotouchwoman/Countries-with-Streamlit.git` into your desired rirectory. And after doing so:
 
-## **To run this app:** make sure you have your dependencies installed via `pip install -r requirements.txt`. App is consisted of 2 main parts currently, so you are likely to just go `python server.py` and `streamlit run app-usage.py`
+1) **Run in the command line:** make sure you have your dependencies installed via `pip install -r requirements/app.txt` and `pip install -r requirements/server.txt`. App is consisted of 2 main parts currently, so you are likely to just go `python flask/server.py` and `streamlit run streamlit/app-usage.py`. **(Important note: this currently is not working out of the box**, as i changed contents in .env files). Basically, **everything to be changed** is **uncommenting** `.env` **support** with `python-dotenv` package and **changing** `HOST` **value in configs and server settings** (when apps are run in the host machine, they interact using `localhost` network. **However**, if they are run containerized, Docker-compose provides them with their own networks and services can interact with the host machine using **port forwarding**, or port binding. It is set up now).
 
-## _Tiny spoiler:_ i actually have not been working on the very **nlp** staff that _creates the data_ for my app, the goal was in the following:
+1) **Run with Docker Compose (recommended):** as i have finished with _Dockerfiles_ and `.yaml` file, you can just go `docker-compose up` in the project directory, **compose will handle everything for you**. Then connect to [your local app url](https://localhost:8501) (**this link only works when containers are running**). Docker install manuals for different operating systems can be found [here](https://docs.docker.com/get-docker/).
+
+_Tiny spoiler:_ i actually have not been working on the very **nlp** staff that _creates the data_ for my app, the goal was in the following:
 + **Python practice** in every way: from basic things like os and numpy to more complex and data-aimed modules like networkx, schema, pandas. i also used some basic visualisation with matplotlib & pyvis and web-related stuff like flask & requests.
 + **Docker practice** - the apps should be containerized to start CI/CD pipeline. i personally find it wonderful and especially the inner-network feature in compose which lets the services speak and listen to each other at ease.
 + **Git, actually**. i am really grateful to git and github environment to let lots of users create everywhere and get shit done, thorough i haven't yet felt the entire power of branches and merges.
 + **Overall awareness**. mostly working with front-side, i fell like it may be interesting, especially while using amazing streamlit framework. Python has great ecosystem and agility (`pip install whateveryouwant`), i adore the fact how you can just get focused on the business-process and get to know something new, actually, like HTTP protocol usage or neural network creation.
-## **I decided to code app once again (almost) from scratch**
-## The biggest flaw of project i have been working on for last month was the lack of expierence. i may still be unexpierenced, however i found some ways to improve the app architecture:
+
+**I decided to code app once again (almost) from scratch.**
+The biggest flaw of project i have been working on for last month was the lack of expierence. i may still be unexpierenced, however i found some ways to improve the app architecture:
 + First app had _almost_ everything wrapped by `streamlitapp` class. later i extracted some parts into `DisplayGraph` and `DataStorage` classes. But it was still not enough, everything felt too straightforward and dull.
 + App could not **interact with back-end** properly. Even integration with self-written tiny testing flask server became pain in the ass. Now i **refactored all the JSON's** and changed data insertion so that UI additional components are loaded (either from server if available or from local file) at first: lists of options for selectboxes, for example (something we cannot pre-fill while desiring app to be able to be up-to-date). Then actual content is loaded, and **the request params** are what is great here: now everywhere requests are done with same interface. yep, it is imperfect, but i have done my current best. I have been coding for about 8 hours since last evening (i struggle to be punctual)
-## **Current TODO** contains:
-+ Finishing refactoring code, currently page 3 is not even started. Also add some links to download content.
-+ Adding compose yaml for this project and testing app in container. Afterwards i will also
+
+**How it works?**
++ Docker-compose creates system of containers by building (and later running) images using *Dockerfile* templates stored in `streamlit/` and `flask/` folders. In **compose file** the following elements are described: build context (project folder), path to dockerfile, container name and path to `.env` file which contains **environment variables** services are using. And, of course, the **port bindings** are also done. i have to note here that **server port is not forwarded to the host port**. This is done so that only app can now reach server. In real deployment another backend should be used (connected to DB, for example). No specific network is used, as there are only two services.
++ In the inner side `AppEngine` and Flask `app` objects are created using **environmental variables**. Flask server *routes* on `/api/ui/<page>` and `/api/content/<page>`, responding to app requests. Within the app itself subclasses of `PageExposer` are created (according to the **sidebar**). Then they load **UI data** (e.g. selectbox contents) **and** (if user clicks *submit button* maybe) **page contents**.
++ Page contents can be loaded from **server** or from **local file** (**note:** actually these involve opening and fetching same files, but this was done just for testing and learning purposes).
++ **If something goes wrong when data/config is loaded**, error messages are displayed *(you probably would not come across such sutuation now, but if you try to modify files and accidently corrupt it, this may happen)*.
++ **Data** used in the currently selected page **can be downloaded from links in the expander**. This is done using some simple HTML magic (see `PageExposer.downloadlink()` function)
++ Added `__doc__` strings to some methods and **brief description to modules**. There are several `.py` files in `streamlit/` dir, each implements some entity and secondary functions used in the module, like `DisplayGraph` component wraps `networkx.DiGraph` and writes `.html` file from pyvis outputs to be later displayed on the page.
++ `DataSource` gives simple interface of getting data. It recieves dict of settings with estimated remote and local sources of data and tries to get it (from server, wherever possible).
++ Some **streamlit.caching** staff is also done to make app **perform faster** and also **decrease server load** by saving **fetched data**
+
+**Current TODO** contains:
++ ~~Finishing refactoring code, currently page 3 is not even started. Also add some links to download content.~~ _Done_
++ ~~Adding compose yaml for this project and testing app in container.~~ _Done_
 + Adding some tests and documentation for docker
 + Adding data validation with Schema for loaded things. I have actually filled Postgre DB with some project datasets and can guess how input data would look like.
