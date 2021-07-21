@@ -1,5 +1,7 @@
 ## **Dockerized streamlit+flask project about informational context within various countries**
 
+## **To run this app:** make sure you have your dependencies installed via `pip install -r requirements.txt`. App is consisted of 2 main parts currently, so you are likely to just go `python server.py` and `streamlit run app-usage.py`
+
 ## _Tiny spoiler:_ i actually have not been working on the very **nlp** staff that _creates the data_ for my app, the goal was in the following:
 + **Python practice** in every way: from basic things like os and numpy to more complex and data-aimed modules like networkx, schema, pandas. i also used some basic visualisation with matplotlib & pyvis and web-related stuff like flask & requests.
 + **Docker practice** - the apps should be containerized to start CI/CD pipeline. i personally find it wonderful and especially the inner-network feature in compose which lets the services speak and listen to each other at ease.

@@ -1,0 +1,12 @@
+# dependency list: these modules 
+# should be installed to make everything work
+# modules with version:
+streamlit ~= 0.84.0
+pandas ~= 1.2.4
+matplotlib ~= 3.4.2
+requests ~= 2.25.1
+networkx ~= 2.5.1
+pyvis ~= 0.1.9
+pytest ~= 6.2.4
+# no specific version for these modules:
+schema
