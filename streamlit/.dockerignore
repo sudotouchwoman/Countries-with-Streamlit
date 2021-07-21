@@ -1,0 +1,7 @@
+# Docker ignore file to exclude odd files from the
+# biuld image
+*.git*
+*.html
+*.vscode/
+*cache*/
+*.env

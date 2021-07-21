@@ -1,13 +1,21 @@
+'''
+module for the backend side. simple flask app, responses to GET requests from the front.
+currently loads JSON data from local files and sends application/json responses
+'''
 from flask import Flask, request, jsonify
 import os
 import json
 
+#from dotenv import load_dotenv
+#dotenv_path = os.path.join(os.getcwd(),'server.env')
+#load_dotenv(dotenv_path)
 
-BASEDIR     = os.getcwd()
-ENCODING    = 'utf-8'
-HOST        = '0.0.0.0'
-PORT        = 5000
-DEBUG       = True
+HOST = os.getenv('HOST_NAME',None)
+PORT = os.getenv('PORT',5000)
+DEBUG = os.getenv('RUN_DEBUG',"False") == "True"
+ENCODING = os.getenv('ENCODING','utf-16')
+BASEDIR = os.getcwd()
+
 app = Flask(__name__)
 
 
@@ -43,45 +51,34 @@ def apply_context_filter(to_resolve:dict, context:dict) -> dict:
                 return element
 
 
-# this function is called when GET request is done to the server
-# so, in return it merely loads needed file (here it is a json string)
-# the string is later parsed in the app
-# somehow, the load is faster when in is requested then during in-app load
-# i can assume this happens as 2 apps are run in separate threads
-# as laptop i am running them is 4C/8T
-# it may also happen bc of a complicated exception handling i used
 @app.route('/api/ui/<page>', methods = ['GET'])
 def get_ui(page:str):
-    FILE = json.loads(import_file('../page/ui/', page,'.json'))
+    '''
+    this function is called when GET request is done to the server
+    so, in return it merely loads needed file (here it is a json string)
+    the string is later parsed in the app
+    somehow, the load is faster when in is requested then during in-app load
+    i can assume this happens as 2 apps are run in separate threads
+    as laptop i am running them is 4C/8T
+    it may also happen bc of a complicated exception handling i used
+    '''
+    FILE = json.loads(import_file('page/ui/', page,'.json'))
     CONTEXT = dict(request.args.items())
     if CONTEXT == {}:
         CONTEXT = None
     FILTERED = apply_context_filter(FILE, CONTEXT)
-    #print(CONTEXT)
-    #print(FILTERED)
     return (jsonify(FILTERED))
 
 
 @app.route('/api/content/<page>', methods = ['GET'])
 def get_content(page:str):
-    FILE = json.loads(import_file('../page/content/', page,'.json'))
+    FILE = json.loads(import_file('page/content/', page,'.json'))
     CONTEXT = dict(request.args.items())
     if CONTEXT == {}:
         CONTEXT = None
     FILTERED = apply_context_filter(FILE, CONTEXT)
-    #print(CONTEXT)
-    #print((FILTERED))
     return (jsonify(FILTERED))
 
 
-# maybe some parts of configs should be loaded from the server
-# for example, lists of items for selectboxes
-# we cannot find out what to fetch in advance, eh?
-# @app.route('/markup/<page>', methods = ['GET'])
-# def get_markup(page:str):
-#     return import_file('markup', page+'.json')
-
-
 if __name__ == '__main__':
-    #app.run(host=HOST, port=PORT, debug=DEBUG)
-    app.run(port=PORT, debug=DEBUG)
+    app.run(host=HOST, port=PORT, debug=DEBUG)

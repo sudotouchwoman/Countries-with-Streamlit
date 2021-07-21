@@ -1,0 +1,18 @@
+version: '3'
+services: 
+    streamlit-frontend:
+        container_name: "st-app"
+        env_file: ./streamlit/app.env
+        build: 
+            context: .
+            dockerfile: ./streamlit/Dockerfile
+        ports: 
+            - "8501:8501"
+    server:
+        container_name: "server"
+        env_file: ./flask/server.env
+        build: 
+            context: .
+            dockerfile: ./flask/Dockerfile
+        ports: 
+            - "5000"

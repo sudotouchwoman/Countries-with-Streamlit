@@ -1,0 +1,86 @@
+{
+    "UI":{
+        "REMOTE":{
+            "HEAD"      :"http://",
+            "HOST"		:"server",
+            "PORT"		:":5000",
+            "ROUTE"		:"/api/ui/model",
+            "TIMEOUT"	:[0.01,0.01]
+        },
+        "LOCAL":{
+                "PATH":"page/ui/model.json"
+        }
+    },
+    "CONTENT":{
+        "REMOTE":{
+            "HEAD"      :"http://",
+            "HOST"		:"server",
+            "PORT"		:":5000",
+            "ROUTE"		:"/api/content/model",
+            "TIMEOUT"	:[0.01,0.01]
+        },
+        "LOCAL":{
+            "PATH":"page/content/model.json"
+        }
+    },
+    "ENCODING":"utf-8",
+    "HTMLDIR":"/page/html/",
+    "PYVIS":{
+        "height"    :"600px",
+        "width"     :"100%",
+        "directed"  :"True",
+        "jsblob": "var options = {\"edges\": {\"arrows\":{\"to\":{\"enabled\":true, \"scaleFactor\":0.05}},\"arrowStrikethrough\":false,\"color\": {\"inherit\": true},\"smooth\": {\"type\":\"continious\",\"roundness\": 0.1}, \"width\":0},\"interaction\":{\"dragNodes\": false, \"tooltipDelay\": 25},\"physics\":{\"enabled\":\"false\"}}"
+    },
+    "MODEL":{
+        "COLORMAP":[
+            ["#4831f7", "#b327f9", "#fc2a5b"],
+            ["#8c8c8c", "#565656", "#252525"],
+            ["#4831f7", "#b327f9", "#fc2a5b"],
+            ["#4831f7", "#b327f9", "#fc2a5b"]
+        ],
+        "THRESHOLD":{
+            "MIN":    -0.2,
+            "MAX":    0.2
+        },
+        "DISTANCE":{
+            "X":200,
+            "Y":10
+        }
+    },
+    "TEXT":{
+        "title": "Модель ИВ",
+        "expander":"Посмотреть описание",
+        "description":[
+            "Выберите страну из выпадающего списка для просмотра.",
+            "Отрицательные веса обозначены синим, положительные - красным.",
+            "Ниже представлена таблица с весами узлов сети.",
+            "Нажмите и потяните, чтобы передвинуть граф, используйте колесико мыши для масштабирования. Чтобы посмотреть информацию об узле, наведите на него курсор."
+        ],
+        "body":{
+            "model":"Интерактивный граф:",
+            "tables":"Распределение весов по слоям модели:"
+        },
+        "selectbox_titles":[
+            "Выберите страну:",
+            "Выберите опцию:"
+        ],
+        "submit_button":"Рассчитать",
+        "columns": {
+            "headers":[
+                "in","persons","orgs","orgtypes"
+            ],
+            "in":[
+                "Входные сигналы","Вес","Люди"
+            ],
+            "persons":[
+                "Люди","Вес","Организации"
+            ],
+            "orgs":[
+                "Организации","Вес","Тип организации"
+            ],
+            "orgtypes":[
+                "Тип организации","Вес","Выходной сигнал"
+            ]
+        }
+    }
+}

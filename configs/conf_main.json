@@ -1,9 +1,9 @@
 {
     "CONFIGS":{
-        "main"      :"../configs/conf_main.json",
-        "estimation":"../configs/conf_estimation.json",
-        "variants"  :"../configs/conf_variants.json",
-        "model"     :"../configs/conf_model.json"
+        "main"      :"configs/conf_main.json",
+        "estimation":"configs/conf_estimation.json",
+        "variants"  :"configs/conf_variants.json",
+        "model"     :"configs/conf_model.json"
     },
     "TEXT":{
         "sidebar":{
@@ -13,7 +13,12 @@
 				"Оценка ИО",
 				"Варианты",
 				"Модель"
-			]
+			],
+            "cache":{
+                "button"        : "Очистить кеш",
+                "success"       : "Кеш успешно очищен",
+                "failure"       : "Нечего очищать"
+            }
         }
     },
     "ENCODING":"utf-8"
