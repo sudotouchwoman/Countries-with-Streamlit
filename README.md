@@ -1,6 +1,6 @@
 ## **Dockerized streamlit+flask project about informational context within various countries**
 **To run this app:** 
- **Clone this repo** with `git clone https://github.com/sudotouchwoman/Countries-with-Streamlit.git` into your desired rirectory. And after doing so:
+ **Clone this repo** with `git clone https://github.com/sudotouchwoman/Countries-with-Streamlit.git` into your desired directory. And after doing so:
 
 1) **Run in the command line:** make sure you have your dependencies installed via `pip install -r requirements/app.txt` and `pip install -r requirements/server.txt`. App is consisted of 2 main parts currently, so you are likely to just go `python flask/server.py` and `streamlit run streamlit/app-usage.py`. **(Important note: this currently is not working out of the box**, as i changed contents in .env files). Basically, **everything to be changed** is **uncommenting** `.env` **support** with `python-dotenv` package and **changing** `HOST` **value in configs and server settings** (when apps are run in the host machine, they interact using `localhost` network. **However**, if they are run containerized, Docker-compose provides them with their own networks and services can interact with the host machine using **port forwarding**, or port binding. It is set up now).
 
